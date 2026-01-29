@@ -43,13 +43,12 @@ mvn spring-boot:run
 ```
 
 4. **Run Kafka locally (if not already running):**
-
 * For Linux/MacOS:
 ```bash
 # Start Zookeeper
 ./bin/zookeeper-server-start.sh ./config/zookeeper.properties
 # Start Kafka server
-./kafka-server-start.sh ./config/server.properties
+./bin/kafka-server-start.sh ./config/server.properties
 ```
 * For Windows:
 ```bash
@@ -57,6 +56,23 @@ mvn spring-boot:run
 .\bin\windows\zookeeper-server-start.bat .\config\windows\zookeeper.properties
 # Start Kafka server
 .\bin\windows\kafka-server-start.bat .\config\windows\server.properties
+```
+
+## Getting Started with Docker
+1. **Clone the repository:** 
+```bash
+git clone https://github.com/MrAasoo/kafka-spring-boot.git
+cd kafka-spring-boot
+```
+
+2. **Build the project using docker compose:**
+```bash
+docker compose build
+```
+
+3. **Run the application in Docker detached mode:**
+```bash
+docker compose up -d
 ```
 
 ## Access the application
@@ -69,8 +85,7 @@ mvn spring-boot:run
   - SUBSCRIBE `/topic/messages`
   - SEND `/app/chat`
 
-## Testing the Application
-You can test the REST API using cURL or Postman. Here’s an example using cURL:
+- You can test the REST API using cURL or Postman. Here’s an example using cURL:
 ```bash
 curl -X POST \
   http://localhost:8080/app/chat \
@@ -86,7 +101,8 @@ Make sure to configure your Kafka server settings in the `application.properties
 ```yml
 spring:  
   kafka:
-    bootstrap-servers: localhost:9092
+    # bootstrap server for docker and localhost
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
