@@ -5,17 +5,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+/**
+ * Main application class for the Kafka WebSocket chat application.
+ */
 @SpringBootApplication
 public class KafkaApplication {
 
+    /**
+     * Main method to run the Spring Boot application.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         SpringApplication.run(KafkaApplication.class, args);
     }
 
-    @GetMapping("/")
-    public String home() {
-        return "Hello, Kafka!";
-    }
 
 }
